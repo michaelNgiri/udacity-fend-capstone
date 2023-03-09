@@ -20,4 +20,4 @@
 
 ## Dependencies:
 
-- Node, vanilla js, npm
+- Node, vanilla js, npm, axios

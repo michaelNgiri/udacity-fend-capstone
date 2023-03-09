@@ -1,4 +1,5 @@
 import axios from 'axios';
+import {validateInputs} from "./functions"
 
 const weatherbitKey = "14517bb29eec43ed80cee68d811c5124";
 const geonamesUser = "alveis";
@@ -10,12 +11,13 @@ function handleSubmit(event) {
   const destination = document.getElementById('destination').value;
   const date = document.getElementById('date').value;
   // const city = fetchCity(destination)
-  // console.log(city)
-  if (date == '' || destination == '') {
+  console.log(date)
+  if (!validateInputs(date, destination)) {
     alert('Please enter your destination and date of travel')
   } else {
 
-    console.log('axios fetch')
+    // fetch geonames api data
+    console.log('axios fetch');
     axios.get(`http://api.geonames.org/searchJSON?q=${destination}&maxRows=1&username=${geonamesUser}`)
       .then((res) => {
         console.log(res)
@@ -26,11 +28,12 @@ function handleSubmit(event) {
         console.log(c.name)
         const lat = c.lat;
         const long = c.lng;
-        const population = c.population.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');;
-        const country = c.name;
+        // convert population number to human readable format then display on the ui
+        const population = c.population.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
         const weatherbitAPI_URL = `https://api.weatherbit.io/v2.0/forecast/daily?lat=${lat}&lon=${long}&key=${weatherbitKey}&start_date=${date}`
         const pixabayAPI_URL = `https://pixabay.com/api/?key=${pixabayKey}&q=${destination}&image_type=photo&category=travel&pretty=true`
 
+        // use the information from geoname to get weather data from weatherbit
         axios.get(weatherbitAPI_URL)
           .then((data) => {
             console.log('::data from weatherbit::')
@@ -57,17 +60,27 @@ function handleSubmit(event) {
             getUI('country_code', country_code);
             getUI('population', population);
             console.log('::data from weatherbit::')
-          
+
+            // add images to the ui
+            // const imageURL = "https://source.unsplash.com/random/800x600"
+            // setImage('image_1', imageURL)
+            axios.get(pixabayAPI_URL)
+            .then((data) => {
+              console.log('::data from pixabay::')
+              console.log(data)
+              console.log(data.data.hits[0].userImageURL)
+              setImage('image_1', data.data.hits[0].previewURL)
+              setImage('image_2', data.data.hits[1].previewURL)
+              setImage('image_3', data.data.hits[2].previewURL)
+              setImage('image_4', data.data.hits[3].previewURL)
+              setImage('image_5', data.data.hits[4].previewURL)
+              setImage('image_6', data.data.hits[5].previewURL)
+              setImage('image_7', data.data.hits[6].previewURL)
+              setImage('image_8', data.data.hits[7].previewURL)
+              console.log('::data from pixabay::')
+            })
+          saveData(destination, date, timezone, max_temp, min_temp)
           })
-      
-        axios.get(pixabayAPI_URL)
-          .then((data) => {
-            console.log('::data from pixabay::')
-            console.log(data)
-            console.log('::data from pixabay::')
-          })
-      
-      
       
         return res;
       })
@@ -76,12 +89,7 @@ function handleSubmit(event) {
 
 
 
-const pattern = new RegExp('^(https?:\\/\\/)?'+ '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+'((\\d{1,3}\\.){3}\\d{1,3}))'+'(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+'(\\?[;&a-z\\d%_.~+=-]*)?'+'(\\#[-a-z\\d_]*)?$','i');
-function validateURL(str) {
-  return !!pattern.test(str);
-}
-export { validateURL, handleSubmit }
-
+// reusable functions
 const getUI = (id,timezone)=>{
   document.getElementById(id).innerHTML = timezone;
 }
@@ -94,3 +102,22 @@ const revert = () => {
   document.getElementById('data').style.display = 'none';
   document.getElementById('form').style.display = 'block';
 }
+
+const setImage = (id,src) => {
+  document.getElementById(id).setAttribute('src',src)
+}
+
+
+const saveData = (destination, date, timezone, max_temp, min_temp) => {
+  const payload = {destination, date, timezone, max_temp, min_temp}
+  axios.post('/save-trip', payload)
+    .then((data) => {
+         console.log("::data from backend::")
+            console.log(data)
+       })
+}
+
+
+
+
+export { handleSubmit }
