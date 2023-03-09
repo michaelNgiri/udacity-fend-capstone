@@ -1,0 +1,57 @@
+/** @format */
+
+body {
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+	background: rgb(148, 162, 147);
+	background: radial-gradient(
+		circle,
+		rgba(148, 162, 147, 1) 0%,
+		rgba(99, 97, 112, 1) 100%
+	);
+	text-align: center;
+	margin-top: 5em;
+}
+
+main {
+	flex: 2;
+}
+
+section {
+	max-width: 800px;
+	margin: 50px auto;
+}
+.result_holder {
+	color: gray;
+	padding: 2em;
+}
+#results {
+	margin-left: 3.2em;
+	text-align: left;
+	justify-content: right;
+	display: none;
+}
+.intro {
+	font-size: 3.5em;
+}
+.section_title {
+	font-size: 2.2em;
+}
+.info_display {
+	font-size: 1.2em;
+}
+#data {
+	display: none;
+}
+#revert_btn {
+	padding: 1em;
+	border-radius: 4%;
+	margin-top: 3em;
+	font-weight: bolder;
+}
+#app-title {
+	font-weight: bolder;
+	font-size: 5em;
+	color: darkgrey;
+}

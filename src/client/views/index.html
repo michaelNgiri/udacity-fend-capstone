@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <title>Udacity Travel App</title>
+    </head>
+
+    <body>
+
+        <!-- <header>
+            <div class="">
+                Logo
+            </div>
+            <div class="">
+                navigation
+            </div>
+        </header> -->
+
+        <main>
+            <h1 id="app-title">Udacity Travel App</h1>
+            <section id="form">
+                <p>Please enter your destination</p>
+                <form class="" onsubmit="return false" method="POST">
+                    <!-- <label class="label" for="name">Enter name (optional)</label>
+                    <input required id="name" type="text" name="input" value="" placeholder="Name(Optional)">
+                    <label class="label" for="url">URL to validate(required)</label>
+                    <input required id="url" type="url" name="input" value="" placeholder="URL to validate(required)">
+                    <input type="submit" id="submit" name="" value="submit"> -->
+                    <label class="label" for="name">Destinature</label>
+                    <input required id="destination" type="text" name="input" value="" placeholder="Destination">
+                    <label class="label" for="url">Date of departure</label>
+                    <input required id="date" type="date" name="date" value="" placeholder="When are you traveling">
+                    <input type="submit" id="submit" name="" value="submit">
+                </form>
+            </section>
+            <p id="welcome"></p>
+            <section id="data">
+                <h1 class="intro">Weather info for <b id="_destination"></b></h1>
+                <p>
+                    <h3 class="section_title">City:</h3>
+                    <span class="info_display"> <b id="city"></b> (<b id="country_code"></b>)</span><br>
+                </p>
+                <hr>
+                <p>
+                    <h3 class="section_title">Population:</h3>
+                    <span class="info_display"> <b id="population"></b></span><br>
+                </p>
+                <hr>
+                <p>
+                    <h3 class="section_title">Cordinates:</h3>
+                    <span class="info_display">Lat: <b id="lat"></b>, Long: <b id="long"></b></span><br>
+                </p>
+                <hr>
+                <p>
+                    <h3 class="section_title">Temperature:</h3>
+                    <span class="info_display">Hi:<b id="max_temp"></b> Low:<b id="min_temp"></b></span><br>
+                </p>
+                <hr>
+                <p>
+                    <h3 class="section_title">Timezone:</h3>
+                    <span class="info_display"> <b id="timezone"></b></span><br>
+                </p>
+                <hr>
+                <p>
+                    <h3 class="section_title">Clouds:</h3>
+                    <span class="info_display"> <b id="clouds"></b></span><br>
+                </p>
+
+                <br>
+                <p>
+                    <button id="revert_btn">Enter another location</button>
+                </p>
+                
+            </section>
+        </main>
+
+        <footer>
+            <div id="footer">
+                <p>Udacity frontend project &copy; 2023</p>
+            </div>
+        </footer>
+        <!-- <script type="text/javascript" src="../index.js"></script> -->
+        <script>
+            // load serviceworker
+            if ('serviceWorker' in navigator) {
+                console.log("::ServiceWorker is ready::")
+                window.addEventListener('load', () => {
+                    navigator.serviceWorker.register('/service-worker.js');
+                });
+            }
+        </script>
+    </body>
+</html>
